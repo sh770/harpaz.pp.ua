@@ -2,7 +2,9 @@
 // משתני סביבה נדרשים:
 //   TELEGRAM_BOT_TOKEN  (Secret)  הטוקן מ-BotFather
 //   TELEGRAM_CHAT_ID    (Secret)  המזהה של הצ'אט שלך עם הבוט
-//   ALLOWED_ORIGINS     (Text)    https://harpaz.pp.ua,https://www.harpaz.pp.ua
+//   ALLOWED_ORIGINS     (Text, אופציונלי)  ברירת מחדל: https://harpaz.pp.ua,https://www.harpaz.pp.ua
+
+const DEFAULT_ORIGINS = 'https://harpaz.pp.ua,https://www.harpaz.pp.ua';
 
 const clean = (v, max) =>
   String(v ?? '').replace(/[\u0000-\u0009\u000b-\u001f]/g, ' ').trim().slice(0, max);
@@ -16,10 +18,13 @@ const reply = (body, status, headers) =>
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
-    const allowed = (env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
-    const okOrigin = allowed.includes(origin);
+    const allowed = (env.ALLOWED_ORIGINS || DEFAULT_ORIGINS)
+      .split(',')
+      .map(s => s.trim().replace(/\/+$/, '').toLowerCase())
+      .filter(Boolean);
+    const okOrigin = allowed.includes(origin.toLowerCase());
     const cors = {
-      'Access-Control-Allow-Origin': okOrigin ? origin : (allowed[0] || ''),
+      'Access-Control-Allow-Origin': okOrigin ? origin : allowed[0],
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Vary': 'Origin',

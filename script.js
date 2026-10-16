@@ -1,6 +1,6 @@
 document.getElementById('y').textContent=new Date().getFullYear();
 // כתובת ה-Worker שלך. להחליף אחרי הפריסה.
-const ENDPOINT='https://REPLACE-ME.workers.dev';
+const ENDPOINT='https://worker.harpaz.pp.ua';
 const f=document.getElementById('lead'),st=document.getElementById('formStatus');
 f.addEventListener('submit',async e=>{
   e.preventDefault();

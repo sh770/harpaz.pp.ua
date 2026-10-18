@@ -44,15 +44,6 @@
 | Cloudflare Worker | קבלת פניות מהטופס ושליחתן לטלגרם |
 | Telegram | קבלת התראה על כל פנייה חדשה |
 
-## הרצה מקומית
-
-```bash
-git clone https://github.com/sh770/harpaz.pp.ua.git
-cd harpaz.pp.ua
-npx serve .
-```
-
-> שליחת הטופס עובדת מול ה-Worker המרוחק בלבד, ולכן בסביבה מקומית ייתכן שהיא תיחסם (CORS).
 
 ## יצירת קשר
 
